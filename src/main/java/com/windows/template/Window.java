@@ -5,9 +5,9 @@ import javax.swing.*;
 
 public abstract class Window extends JFrame{
 
-    public Window(String title, int length, int width){
+    public Window(String title, int width, int height){
         super(title);
-        setSize(length,width);
+        setSize(width,height);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

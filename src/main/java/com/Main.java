@@ -8,15 +8,20 @@ import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
+import com.startup.window.StartupWindow;
 
 import java.io.IOException;
+
+import static com.windows.constants.FrameConstants.FORM_WINDOW_WIDTH;
+import static com.windows.constants.FrameConstants.FORM_WINDOW_HEIGHT;
 
 public class Main {
 
     private static final String API_KEY = "AIzaSyCjP9a5P458mMHIoxDdV_JkX7_q278PF2M";
 
     public static void main(String[] args) {
-
+        StartupWindow startupWindow = new StartupWindow("ConU Hacks 2018", FORM_WINDOW_WIDTH, FORM_WINDOW_HEIGHT);
+        startupWindow.setVisible(true);
     }
 
     private static Duration something() {
