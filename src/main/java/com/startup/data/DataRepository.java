@@ -8,5 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DataRepository {
-    private Map<WeekdayId, List<Courses>> dataRepository = new HashMap<>();
+    private static Map<WeekdayId, List<Courses>> dataRepository = new HashMap<>();
+
+    public static Map<WeekdayId, List<Courses>> getDataRepository(){
+        return dataRepository;
+    }
 }
