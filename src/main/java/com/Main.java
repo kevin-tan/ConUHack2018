@@ -8,10 +8,17 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 import com.windows.constants.FrameConstants;
 import com.windows.template.Window;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.RandomAccessRead;
+import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Main {
