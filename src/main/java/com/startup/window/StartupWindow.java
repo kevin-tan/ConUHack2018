@@ -1,18 +1,22 @@
 package com.startup.window;
 
+import com.startup.form.Form;
 import com.windows.template.Window;
 
 import javax.swing.*;
 
-public class StartupWindow extends Window{
+public class StartupWindow extends Window {
 
-    public StartupWindow(String title, int length, int width) {
-        super(title, length, width);
-        configure();
+    public StartupWindow(String title, int width, int height) {
+        super(title, width, height);
+        configure(new Form());
     }
 
     @Override
-    protected void configure(JPanel...jPanels) {
-
+    protected void configure(JPanel... jPanels) {
+        for (JPanel jPanel : jPanels) {
+            //TODO StartupWindow has no layout
+            add(jPanel);
+        }
     }
 }
