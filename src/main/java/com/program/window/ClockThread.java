@@ -17,7 +17,7 @@ public class ClockThread extends Thread{
         while(programWindow.isVisible()){
             try {
                 programWindow.setTitle(getDateAndTime());
-                this.sleep(1000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
