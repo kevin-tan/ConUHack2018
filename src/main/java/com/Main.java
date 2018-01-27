@@ -3,10 +3,11 @@ package com;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
+import com.google.maps.*;
 import com.google.maps.errors.ApiException;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.GeocodingResult;
 
 import java.io.IOException;
@@ -19,10 +20,12 @@ public class Main {
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
                 .build();
-        GeocodingResult[] results = new GeocodingResult[0];
+        DistanceMatrix results = null;
+        DistanceMatrixApiRequest request = DistanceMatrixApi.newRequest(geoApiContext)
+                .origins("8806 Tardif, Montreal, QC H8R2R7")
+                .destinations("1600 Amphitheatre Parkway Mountain View, CA 94043");
         try {
-            results = GeocodingApi.geocode(geoApiContext,
-                    "1600 Amphitheatre Parkway Mountain View, CA 94043").await();
+            results = request.await();
         } catch (ApiException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -31,6 +34,12 @@ public class Main {
             e.printStackTrace();
         }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println(gson.toJson(results[0].addressComponents));
+        for(DistanceMatrixRow distanceMatrix: results.rows){
+            for(DistanceMatrixElement distanceMatrixElement : distanceMatrix.elements){
+                System.out.println(gson.toJson(distanceMatrixElement.duration));
+            }
+        }
+
+
     }
 }
