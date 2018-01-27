@@ -1,21 +1,24 @@
 package com.startup.form;
 
 import com.startup.constants.WeekdayId;
+import com.startup.data.DataRepository;
+import com.startup.model.Courses;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.windows.constants.FrameConstants.INFO_WINDOW_WIDTH;
 import static com.windows.constants.FrameConstants.INFO_WINDOW_HEIGHT;
 
 public class DeparturesForm extends JPanel {
 
-    private JButton submitButton;
+    private JTextArea[] jTextAreas = new JTextArea[5];
 
 
     public DeparturesForm() {
@@ -24,25 +27,37 @@ public class DeparturesForm extends JPanel {
         setBackground(Color.BLACK);
         setVisible(true);
 
-        submitButton = new JButton("Submit");
+        JButton submitButton = new JButton("Submit");
 
-        submitButton.addActionListener((actionEvent) -> System.out.println("button pressed"));
+        submitButton.addActionListener((actionEvent) -> registerData());
 
         addTextboxes();
         add(submitButton);
     }
 
     private void addTextboxes() {
+        int index = 0;
         for (WeekdayId weekdayId : WeekdayId.values()) {
             JLabel weekdayLabel = new JLabel(weekdayId.getWeekday() + ": ");
             weekdayLabel.setForeground(Color.WHITE);
             add(weekdayLabel);
-            JTextArea jTextArea = new JTextArea(1, 10);
-            add(jTextArea);
+            jTextAreas[index] = new JTextArea(1, 10);
+            add(jTextAreas[index]);
+            index++;
         }
     }
 
     private void registerData() {
-
+        int index = 0;
+        for (WeekdayId weekdayId : WeekdayId.values()) {
+            List<Courses> courses = new ArrayList<>();
+            //TODO what about invalid input? (wrong type)
+            int numberOfDepartures = Integer.parseInt(jTextAreas[index].getText());
+            for (int i = 0; i < numberOfDepartures; i++) {
+                courses.add(new Courses());
+            }
+            DataRepository.getDataRepository().put(weekdayId, courses);
+            index++;
+        }
     }
 }
