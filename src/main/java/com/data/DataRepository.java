@@ -1,4 +1,4 @@
-package com.startup.data;
+package com.data;
 
 import com.startup.constants.WeekdayId;
 import com.startup.model.Courses;
