@@ -8,7 +8,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static com.data.DataConstants.NUM_OF_DEPARTURES;
@@ -16,7 +16,7 @@ import static com.windows.constants.FrameConstants.FORM_WINDOW_HEIGHT;
 import static com.windows.constants.FrameConstants.FORM_WINDOW_WIDTH;
 
 //TODO UI needs big overhaul
-public class DeparturesForm extends JPanel {
+class DeparturesForm extends JPanel {
 
     DeparturesForm(JComboBox[] numOfDepartures) {
         setSize(FORM_WINDOW_WIDTH, FORM_WINDOW_HEIGHT);
@@ -47,7 +47,7 @@ public class DeparturesForm extends JPanel {
     void registerData(JComboBox[] numOfDepartures) {
         int index = 0;
         for (WeekdayId weekdayId : WeekdayId.values()) {
-            List<Courses> courses = new ArrayList<>();
+            List<Courses> courses = new LinkedList<>();
             int numberOfDepartures = (int) numOfDepartures[index].getSelectedItem();
             for (int i = 0; i < numberOfDepartures; i++) {
                 courses.add(new Courses());
