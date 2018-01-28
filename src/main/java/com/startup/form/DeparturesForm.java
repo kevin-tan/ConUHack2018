@@ -15,21 +15,28 @@ import static com.startup.data.DataConstants.NUM_OF_DEPARTURES;
 import static com.windows.constants.FrameConstants.INFO_WINDOW_HEIGHT;
 import static com.windows.constants.FrameConstants.INFO_WINDOW_WIDTH;
 
+//TODO UI needs big overhaul
 public class DeparturesForm extends JPanel {
 
     private JComboBox[] numOfDepartures = new JComboBox[5];
 
     public DeparturesForm() {
         setSize(INFO_WINDOW_WIDTH, INFO_WINDOW_HEIGHT);
-        setLayout(new MigLayout(new LC().wrapAfter(2).insets("5")));
+        setLayout(new MigLayout(new LC().wrapAfter(2).insets("5").gridGap("35", "15")));
         setBackground(Color.BLACK);
         setVisible(true);
 
         JButton submitButton = new JButton("Submit");
+        submitButton.setForeground(Color.BLUE);
 
         submitButton.addActionListener((actionEvent) -> registerData());
 
+        JLabel label = new JLabel("Enter number of departures for each day of the week");
+        label.setForeground(Color.CYAN);
+        add(label, "span 2");
+
         addComboBoxes();
+        //add(submitButton, "gapleft 30, span 2");
         add(submitButton);
     }
 
