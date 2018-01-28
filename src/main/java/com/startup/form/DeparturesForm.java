@@ -1,8 +1,8 @@
 package com.startup.form;
 
-import com.startup.constants.WeekdayId;
 import com.data.DataRepository;
 import com.model.Courses;
+import com.startup.constants.WeekdayId;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.data.DataConstants.NUM_OF_DEPARTURES;
-import static com.windows.constants.FrameConstants.INFO_WINDOW_HEIGHT;
-import static com.windows.constants.FrameConstants.INFO_WINDOW_WIDTH;
+import static com.windows.constants.FrameConstants.FORM_WINDOW_HEIGHT;
+import static com.windows.constants.FrameConstants.FORM_WINDOW_WIDTH;
 
 //TODO UI needs big overhaul
 public class DeparturesForm extends JPanel {
@@ -21,7 +21,7 @@ public class DeparturesForm extends JPanel {
     private JComboBox[] numOfDepartures = new JComboBox[5];
 
     public DeparturesForm() {
-        setSize(INFO_WINDOW_WIDTH, INFO_WINDOW_HEIGHT);
+        setSize(FORM_WINDOW_WIDTH, FORM_WINDOW_HEIGHT);
         setLayout(new MigLayout(new LC().wrapAfter(2).insets("5").gridGap("35", "15")));
         setBackground(Color.BLACK);
         setVisible(true);
@@ -29,7 +29,10 @@ public class DeparturesForm extends JPanel {
         JButton submitButton = new JButton("Submit");
         submitButton.setForeground(Color.BLUE);
 
-        submitButton.addActionListener((actionEvent) -> registerData());
+        submitButton.addActionListener((actionEvent) -> {
+            registerData();
+            setVisible(false);
+        });
 
         JLabel label = new JLabel("Enter number of departures for each day of the week");
         label.setForeground(Color.CYAN);
