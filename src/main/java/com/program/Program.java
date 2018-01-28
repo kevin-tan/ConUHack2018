@@ -4,7 +4,7 @@ import com.program.window.ClockThread;
 import com.program.window.ProgramWindow;
 import com.startup.constants.WeekdayId;
 import com.data.DataRepository;
-import com.startup.model.Courses;
+import com.model.Courses;
 import com.windows.constants.FrameConstants;
 
 import java.util.List;

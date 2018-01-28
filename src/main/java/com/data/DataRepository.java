@@ -1,7 +1,7 @@
 package com.data;
 
 import com.startup.constants.WeekdayId;
-import com.startup.model.Courses;
+import com.model.Courses;
 
 import java.util.HashMap;
 import java.util.List;

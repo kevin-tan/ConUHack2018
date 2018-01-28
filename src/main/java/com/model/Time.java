@@ -1,4 +1,4 @@
-package com.startup.model;
+package com.model;
 
 public class Time {
 
