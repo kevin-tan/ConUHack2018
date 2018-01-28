@@ -4,10 +4,12 @@ import com.data.DataRepository;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.TransitDetails;
+import com.model.Courses;
 import com.program.window.menu.MenuBar;
 import com.program.window.menu.MenuItems;
 import com.program.window.thread.DirectionRequestThread;
 import com.request.direction.DirectionRequest;
+import com.startup.constants.WeekdayId;
 import com.utils.DateTimeUtils;
 import com.utils.JLabelFactory;
 import com.utils.StringUtils;
@@ -18,6 +20,8 @@ import org.joda.time.format.DateTimeFormat;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class ProgramWindow extends Window {
 
@@ -76,7 +80,8 @@ public class ProgramWindow extends Window {
         add(panel, BorderLayout.CENTER);
 
         //Data
-
+        Map<WeekdayId, List<Courses>> map = DataRepository.getDataRepository();
+        JLabel currentDate = new JLabel();
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {

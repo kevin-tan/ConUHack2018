@@ -1,6 +1,5 @@
 package com.startup.window;
 
-import com.program.Program;
 import com.startup.form.InitialForm;
 import com.windows.template.Window;
 
@@ -12,7 +11,7 @@ public class StartupWindow extends Window {
     public StartupWindow(String title, int width, int height) {
         super(title, width, height);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        configure(new InitialForm(new Program()));
+        configure(new InitialForm());
     }
 
     @Override
