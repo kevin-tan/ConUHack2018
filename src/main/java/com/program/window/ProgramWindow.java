@@ -21,7 +21,7 @@ public class ProgramWindow extends Window {
     protected void configure(JPanel... jPanels) {
         //File menu items
         JMenuItem exit = new JMenuItem(MenuItems.EXIT.toString());
-        exit.addActionListener(acitionListener -> System.exit(0));
+        exit.addActionListener(actionListener -> System.exit(0));
         //TODO add functionality
         JMenuItem editCourse = new JMenuItem(MenuItems.EDIT_COURSES.toString());
         jMenuBar.add(createJMenu(MenuBar.FILE, editCourse, exit));
