@@ -43,6 +43,7 @@ public class ProgramWindow extends Window {
         add(jMenuBar, BorderLayout.NORTH);
 
         //Adding Google's Api for Direction
+        //TODO cleanup to show only the shortest time i.e. [0]
         JPanel panel = new JPanel(new GridLayout(4, 1));
         try {
             for (String busLine : directionRequest.getStartDirection()) {
