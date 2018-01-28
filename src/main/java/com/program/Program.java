@@ -14,12 +14,12 @@ import java.util.Map;
 public class Program {
 
     private final ProgramWindow programWindow;
-    private final Thread dateThread;
+    private final Thread timeThread;
     private final Map<WeekdayId, List<Courses>> dataRepo;
 
     public Program() {
         programWindow = new ProgramWindow("", FrameConstants.INFO_WINDOW_WIDTH, FrameConstants.INFO_WINDOW_HEIGHT);
-        dateThread = new ClockThread(programWindow);
+        timeThread = new ClockThread(programWindow);
         dataRepo = DataRepository.getDataRepository();
     }
 
@@ -28,11 +28,13 @@ public class Program {
         programWindow.setVisible(true);
         if (!dataRepo.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek())).isEmpty())
             programWindow.startDirectionRequestThread();
-        dateThread.start();
+        programWindow.startDateThread();
+        timeThread.start();
     }
 
     public void stop() throws InterruptedException {
-        dateThread.join();
+        timeThread.join();
+        programWindow.stopDateThread();
         programWindow.stopDirectionRequestThread();
         programWindow.setVisible(false);
     }

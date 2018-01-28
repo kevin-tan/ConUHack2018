@@ -7,6 +7,7 @@ import com.google.maps.model.TransitDetails;
 import com.model.Courses;
 import com.program.window.menu.MenuBar;
 import com.program.window.menu.MenuItems;
+import com.program.window.thread.DateThread;
 import com.program.window.thread.DirectionRequestThread;
 import com.request.direction.DirectionRequest;
 import com.startup.constants.WeekdayId;
@@ -26,13 +27,14 @@ public class ProgramWindow extends Window {
 
     private final JMenuBar jMenuBar;
     private final DirectionRequest directionRequest;
-    private Thread directionRequestThread;
+    private Thread directionRequestThread, dateThread;
     private Map<WeekdayId, List<Courses>> map;
 
     public ProgramWindow(String title, int width, int height) {
         super(title, width, height);
         jMenuBar = new JMenuBar();
         directionRequestThread = null;
+        dateThread = null;
         map = DataRepository.getDataRepository();
         directionRequest = new DirectionRequest(DataRepository.getUser());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,16 +88,16 @@ public class ProgramWindow extends Window {
 
     public void addData() {
         //Data
-
         JPanel date = new JPanel(new FlowLayout());
         JLabel currentDate = new JLabel(DateTimeUtils.dateTime().toString(DateTimeFormat.mediumDate()));
+        dateThread = new DateThread(map, this, currentDate);
         date.add(currentDate);
         if (!map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek())).isEmpty()) {
             JLabel departureTime = new JLabel(map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
                     .get(0).getStartTime().toString(DateTimeFormat.mediumTime()));
             date.add(departureTime);
-            add(date, BorderLayout.EAST);
         }
+        add(date, BorderLayout.EAST);
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {
@@ -111,5 +113,13 @@ public class ProgramWindow extends Window {
 
     public void stopDirectionRequestThread() throws InterruptedException {
         directionRequestThread.join();
+    }
+
+    public void startDateThread() {
+        dateThread.start();
+    }
+
+    public void stopDateThread() throws InterruptedException {
+        dateThread.join();
     }
 }
