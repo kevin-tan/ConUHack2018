@@ -1,4 +1,6 @@
-package com.program.window;
+package com.program.window.thread;
+
+import com.program.window.ProgramWindow;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

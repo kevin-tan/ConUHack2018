@@ -5,6 +5,7 @@ import com.google.maps.errors.ApiException;
 import com.program.window.menu.MenuBar;
 import com.program.window.menu.MenuItems;
 import com.request.dimension.DimensionMatrixRequest;
+import com.request.direction.DirectionRequest;
 import com.windows.template.Window;
 
 import javax.swing.*;
@@ -15,11 +16,13 @@ public class ProgramWindow extends Window {
 
     private final JMenuBar jMenuBar;
     private final DimensionMatrixRequest dimensionMatrixRequest;
+    private final DirectionRequest directionRequest;
 
     public ProgramWindow(String title, int width, int height) {
         super(title, width, height);
         jMenuBar = new JMenuBar();
         dimensionMatrixRequest = new DimensionMatrixRequest(DataRepository.getUser());
+        directionRequest = new DirectionRequest(DataRepository.getUser());
         configure();
     }
 
@@ -40,14 +43,24 @@ public class ProgramWindow extends Window {
         add(jMenuBar, BorderLayout.NORTH);
 
         //Adding Google's Api for DimensionMatrix
-        JLabel jLabel = null;
+        JLabel duration = null;
         try {
-             jLabel = new JLabel(dimensionMatrixRequest.getTripDuration().humanReadable);
-             jLabel.setSize(50,50);
+             duration = new JLabel(dimensionMatrixRequest.getTripDuration().humanReadable);
+             duration.setSize(50,50);
         } catch (InterruptedException | ApiException | IOException e) {
             e.printStackTrace();
         }
-        add(jLabel, BorderLayout.CENTER);
+        add(duration, BorderLayout.EAST);
+
+        //Adding Google's Api for Direction
+        JLabel startDirection = null;
+        try {
+            startDirection = new JLabel(directionRequest.getStartDirection());
+            startDirection.setSize(100,100);
+        } catch (InterruptedException | ApiException | IOException e) {
+            e.printStackTrace();
+        }
+        add(startDirection, BorderLayout.WEST);
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {

@@ -1,5 +1,6 @@
 package com.data;
 
+import com.google.maps.model.TransitMode;
 import com.google.maps.model.TravelMode;
 import com.model.Courses;
 import com.model.User;
@@ -16,7 +17,7 @@ public class DataRepository {
     //TODO remove all inputs and put null for all, info will be retrieved from setup - 2
     private static User user = new User("8806 Tardif, Montreal, QC H8R2R7",
             "Concordia University EV Building, 1515 Saint-Catherine St W, Montreal, QC H3G 2W1",
-            TravelMode.TRANSIT);
+            TravelMode.TRANSIT, TransitMode.BUS, TransitMode.SUBWAY);
 
     public static Map<WeekdayId, List<Courses>> getDataRepository() {
         return dataRepository;
