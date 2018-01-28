@@ -14,7 +14,7 @@ public class Courses {
 
     public Courses() {
         this.courseName = "";
-        this.startTime = new DateTime(DateTimeUtils.dateTime().getMonthOfYear(),DateTimeUtils.dateTime().getMonthOfYear(),
+        this.startTime = new DateTime(DateTimeUtils.dateTime().getYear(),DateTimeUtils.dateTime().getMonthOfYear(),
                 DateTimeUtils.dateTime().getDayOfMonth(),0,0);
     }
 

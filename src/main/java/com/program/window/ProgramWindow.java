@@ -14,7 +14,6 @@ import com.utils.DateTimeUtils;
 import com.utils.JLabelFactory;
 import com.utils.StringUtils;
 import com.windows.template.Window;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import javax.swing.*;
@@ -28,11 +27,13 @@ public class ProgramWindow extends Window {
     private final JMenuBar jMenuBar;
     private final DirectionRequest directionRequest;
     private Thread directionRequestThread;
+    private Map<WeekdayId, List<Courses>> map;
 
     public ProgramWindow(String title, int width, int height) {
         super(title, width, height);
         jMenuBar = new JMenuBar();
         directionRequestThread = null;
+        map = DataRepository.getDataRepository();
         directionRequest = new DirectionRequest(DataRepository.getUser());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configure();
@@ -58,17 +59,16 @@ public class ProgramWindow extends Window {
         JPanel panel = new JPanel(new GridLayout(4, 1)); //TODO change layout of panel
 
         try {
-            DateTime dateTime = DateTimeUtils.dateTime();
-            DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg(new DateTime(dateTime.getYear(),
-                    dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay(),
-                    dateTime.getMinuteOfHour()))[0];
+            DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg(map
+                    .get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
+                    .get(0).getStartTime())[0];
             TransitDetails transitDetails = directionsLegDeparture.steps[1].transitDetails;
             JLabel bus = JLabelFactory.createJLabel(StringUtils
                     .appendStrings(transitDetails.headsign, transitDetails.line.name));
             JLabel departureFromHome = JLabelFactory.createJLabel(directionsLegDeparture.departureTime.toString(DateTimeFormat.shortTime()));
             JLabel departure = JLabelFactory.createJLabel(transitDetails.departureTime.toString(DateTimeFormat.shortTime()));
             JLabel arrival = JLabelFactory.createJLabel(directionsLegDeparture.arrivalTime.toString(DateTimeFormat.shortTime()));
-            directionRequestThread = new DirectionRequestThread(this, directionRequest,
+            directionRequestThread = new DirectionRequestThread(this, directionRequest, map,
                     bus, departureFromHome, departure, arrival);
             panel.add(bus);
             panel.add(departureFromHome);
@@ -79,9 +79,19 @@ public class ProgramWindow extends Window {
         }
         add(panel, BorderLayout.CENTER);
 
+
+    }
+
+    public void addData() {
         //Data
-        Map<WeekdayId, List<Courses>> map = DataRepository.getDataRepository();
-        JLabel currentDate = new JLabel();
+
+        JPanel date = new JPanel(new FlowLayout());
+        JLabel currentDate = new JLabel(DateTimeUtils.dateTime().toString(DateTimeFormat.mediumDate()));
+        date.add(currentDate);
+        JLabel departureTime = new JLabel(map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
+                .get(0).getStartTime().toString(DateTimeFormat.mediumTime()));
+        date.add(departureTime);
+        add(date, BorderLayout.EAST);
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {
