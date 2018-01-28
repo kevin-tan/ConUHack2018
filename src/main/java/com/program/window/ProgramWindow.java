@@ -8,9 +8,11 @@ import com.program.window.menu.MenuBar;
 import com.program.window.menu.MenuItems;
 import com.program.window.thread.DirectionRequestThread;
 import com.request.direction.DirectionRequest;
+import com.utils.DateTimeUtils;
 import com.utils.JLabelFactory;
 import com.utils.StringUtils;
 import com.windows.template.Window;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import javax.swing.*;
@@ -51,7 +53,10 @@ public class ProgramWindow extends Window {
         JPanel panel = new JPanel(new GridLayout(4, 1)); //TODO change layout of panel
 
         try {
-            DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg()[0];
+            DateTime dateTime = DateTimeUtils.dateTime();
+            DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg(new DateTime(dateTime.getYear(),
+                    dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay(),
+                    dateTime.getMinuteOfHour()))[0];
             TransitDetails transitDetails = directionsLegDeparture.steps[1].transitDetails;
             JLabel bus = JLabelFactory.createJLabel(StringUtils
                     .appendStrings(transitDetails.headsign, transitDetails.line.name));

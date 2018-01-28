@@ -5,7 +5,9 @@ import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.TransitDetails;
 import com.program.window.ProgramWindow;
 import com.request.direction.DirectionRequest;
+import com.utils.DateTimeUtils;
 import com.utils.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import javax.swing.*;
@@ -31,8 +33,10 @@ public class DirectionRequestThread extends Thread {
     public void run() {
         while (programWindow.isVisible()) {
             try {
-                System.err.println("refresh");
-                DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg()[0];
+                DateTime dateTime = DateTimeUtils.dateTime();
+                DirectionsLeg directionsLegDeparture = directionRequest
+                        .getDirectionLeg(new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(),
+                                dateTime.getDayOfMonth(), dateTime.getHourOfDay(), dateTime.getMinuteOfHour()))[0];
                 TransitDetails transitDetails = directionsLegDeparture.steps[1].transitDetails;
                 bus.setText(StringUtils
                         .appendStrings(transitDetails.headsign, transitDetails.line.name));

@@ -7,6 +7,7 @@ import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.model.User;
 import com.request.DefaultGeoApiContextStarter;
+import org.joda.time.DateTime;
 
 import java.io.IOException;
 
@@ -21,19 +22,20 @@ public class DirectionRequest extends DefaultGeoApiContextStarter {
         results = null;
     }
 
-    private DirectionsApiRequest request() throws InterruptedException, ApiException, IOException {
+    private DirectionsApiRequest request(DateTime dateTime) throws InterruptedException, ApiException, IOException {
         request = DirectionsApi.newRequest(geoApiContext)
                 .origin(user.getAddressOrigin())
                 .destination(user.getAddressDestination())
                 .mode(user.getTravelMode())
                 .transitMode(user.getTransitModes())
-                .alternatives(true);
+                .alternatives(true)
+                .departureTime(dateTime);
         results = request.await();
         return request;
     }
 
-    public DirectionsLeg[] getDirectionLeg() throws InterruptedException, ApiException, IOException {
-        request();
+    public DirectionsLeg[] getDirectionLeg(DateTime dateTime) throws InterruptedException, ApiException, IOException {
+        request(dateTime);
         return results.routes[0].legs;
     }
 }
