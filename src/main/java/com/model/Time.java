@@ -35,4 +35,12 @@ public class Time {
     public int getSeconds() {
         return seconds;
     }
+
+    public boolean isEmpty() {
+        if (hours == 0 && minutes == 0 && seconds == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -26,4 +26,8 @@ public class DataRepository {
     public static User getUser() {
         return user;
     }
+
+    public static int getNumberOfTimes(WeekdayId weekdayId) {
+        return dataRepository.get(weekdayId).size();
+    }
 }

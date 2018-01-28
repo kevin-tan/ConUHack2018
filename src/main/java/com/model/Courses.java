@@ -1,8 +1,8 @@
 package com.model;
 
 public class Courses {
-    private final String courseName;
-    private final Time startTime;
+    private String courseName;
+    private Time startTime;
 
     public Courses(String courseName, Time startTime) {
         this.courseName = courseName;
@@ -20,5 +20,9 @@ public class Courses {
 
     public Time getStartTime() {
         return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 }

@@ -18,32 +18,21 @@ import static com.windows.constants.FrameConstants.FORM_WINDOW_WIDTH;
 //TODO UI needs big overhaul
 public class DeparturesForm extends JPanel {
 
-    private JComboBox[] numOfDepartures = new JComboBox[5];
-
-    public DeparturesForm() {
+    DeparturesForm(JComboBox[] numOfDepartures) {
         setSize(FORM_WINDOW_WIDTH, FORM_WINDOW_HEIGHT);
         setLayout(new MigLayout(new LC().wrapAfter(2).insets("5").gridGap("35", "15")));
         setBackground(Color.BLACK);
         setVisible(true);
 
-        JButton submitButton = new JButton("Submit");
-        submitButton.setForeground(Color.BLUE);
-
-        submitButton.addActionListener((actionEvent) -> {
-            registerData();
-            setVisible(false);
-        });
-
         JLabel label = new JLabel("Enter number of departures for each day of the week");
         label.setForeground(Color.CYAN);
         add(label, "span 2");
 
-        addComboBoxes();
-        //add(submitButton, "gapleft 30, span 2");
-        add(submitButton);
+        addComboBoxes(numOfDepartures);
     }
 
-    private void addComboBoxes() {
+    //TODO drop down list is quite large
+    private void addComboBoxes(JComboBox[] numOfDepartures) {
         int index = 0;
         for (WeekdayId weekdayId : WeekdayId.values()) {
             JLabel weekdayLabel = new JLabel(weekdayId.getWeekday() + ": ");
@@ -55,7 +44,7 @@ public class DeparturesForm extends JPanel {
         }
     }
 
-    private void registerData() {
+    void registerData(JComboBox[] numOfDepartures) {
         int index = 0;
         for (WeekdayId weekdayId : WeekdayId.values()) {
             List<Courses> courses = new ArrayList<>();
