@@ -1,8 +1,8 @@
 package com.startup.form;
 
 import com.startup.constants.WeekdayId;
-import com.startup.data.DataRepository;
-import com.startup.model.Courses;
+import com.data.DataRepository;
+import com.model.Courses;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
