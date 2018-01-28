@@ -48,7 +48,7 @@ public class ProgramWindow extends Window {
         add(jMenuBar, BorderLayout.NORTH);
 
         //Adding Google's Api for Direction (Showing the closest time to current)
-        JPanel panel = new JPanel(new GridLayout(4, 1));
+        JPanel panel = new JPanel(new GridLayout(4, 1)); //TODO change layout of panel
 
         try {
             DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg()[0];
