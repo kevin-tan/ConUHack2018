@@ -2,11 +2,18 @@ package com.program.window;
 
 import com.data.DataRepository;
 import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsLeg;
+import com.google.maps.model.TransitDetails;
 import com.program.window.menu.MenuBar;
 import com.program.window.menu.MenuItems;
-import com.request.dimension.DimensionMatrixRequest;
+import com.program.window.thread.DirectionRequestThread;
 import com.request.direction.DirectionRequest;
+import com.utils.DateTimeUtils;
+import com.utils.JLabelFactory;
+import com.utils.StringUtils;
 import com.windows.template.Window;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +22,13 @@ import java.io.IOException;
 public class ProgramWindow extends Window {
 
     private final JMenuBar jMenuBar;
-    private final DimensionMatrixRequest dimensionMatrixRequest;
     private final DirectionRequest directionRequest;
+    private Thread directionRequestThread;
 
     public ProgramWindow(String title, int width, int height) {
         super(title, width, height);
         jMenuBar = new JMenuBar();
-        dimensionMatrixRequest = new DimensionMatrixRequest(DataRepository.getUser());
+        directionRequestThread = null;
         directionRequest = new DirectionRequest(DataRepository.getUser());
         configure();
     }
@@ -42,25 +49,30 @@ public class ProgramWindow extends Window {
 
         add(jMenuBar, BorderLayout.NORTH);
 
-        //Adding Google's Api for DimensionMatrix
-        JLabel duration = null;
-        try {
-             duration = new JLabel(dimensionMatrixRequest.getTripDuration().humanReadable);
-             duration.setSize(50,50);
-        } catch (InterruptedException | ApiException | IOException e) {
-            e.printStackTrace();
-        }
-        add(duration, BorderLayout.EAST);
+        //Adding Google's Api for Direction (Showing the closest time to current)
+        JPanel panel = new JPanel(new GridLayout(4, 1)); //TODO change layout of panel
 
-        //Adding Google's Api for Direction
-        JLabel startDirection = null;
         try {
-            startDirection = new JLabel(directionRequest.getStartDirection());
-            startDirection.setSize(100,100);
+            DateTime dateTime = DateTimeUtils.dateTime();
+            DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg(new DateTime(dateTime.getYear(),
+                    dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), dateTime.getHourOfDay(),
+                    dateTime.getMinuteOfHour()))[0];
+            TransitDetails transitDetails = directionsLegDeparture.steps[1].transitDetails;
+            JLabel bus = JLabelFactory.createJLabel(StringUtils
+                    .appendStrings(transitDetails.headsign, transitDetails.line.name));
+            JLabel departureFromHome = JLabelFactory.createJLabel(directionsLegDeparture.departureTime.toString(DateTimeFormat.shortTime()));
+            JLabel departure = JLabelFactory.createJLabel(transitDetails.departureTime.toString(DateTimeFormat.shortTime()));
+            JLabel arrival = JLabelFactory.createJLabel(directionsLegDeparture.arrivalTime.toString(DateTimeFormat.shortTime()));
+            directionRequestThread = new DirectionRequestThread(this, directionRequest,
+                    bus, departureFromHome, departure, arrival);
+            panel.add(bus);
+            panel.add(departureFromHome);
+            panel.add(departure);
+            panel.add(arrival);
         } catch (InterruptedException | ApiException | IOException e) {
             e.printStackTrace();
         }
-        add(startDirection, BorderLayout.WEST);
+        add(panel, BorderLayout.CENTER);
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {
@@ -68,5 +80,13 @@ public class ProgramWindow extends Window {
         for (JMenuItem items : jMenuItems)
             menu.add(items);
         return menu;
+    }
+
+    public void startDirectionRequestThread() {
+        directionRequestThread.start();
+    }
+
+    public void stopDirectionRequestThread() throws InterruptedException {
+        directionRequestThread.join();
     }
 }

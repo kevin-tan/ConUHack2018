@@ -24,11 +24,13 @@ public class Program {
 
     public void start() {
         programWindow.setVisible(true);
+        programWindow.startDirectionRequestThread();
         dateThread.start();
     }
 
     public void stop() throws InterruptedException {
         dateThread.join();
+        programWindow.stopDirectionRequestThread();
         programWindow.setVisible(false);
     }
 }

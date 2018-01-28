@@ -16,8 +16,8 @@ public class DataRepository {
     //Should be the only user in the program at all time
     //TODO remove all inputs and put null for all, info will be retrieved from setup - 2
     private static User user = new User("8806 Tardif, Montreal, QC H8R2R7",
-            "Concordia University EV Building, 1515 Saint-Catherine St W, Montreal, QC H3G 2W1",
-            TravelMode.TRANSIT, TransitMode.BUS, TransitMode.SUBWAY);
+            "Concordia University EV Building, 1515 Saint-Catherine St W, Montreal, QC H3G 2W1"
+            ,TravelMode.TRANSIT, TransitMode.BUS, TransitMode.SUBWAY);
 
     public static Map<WeekdayId, List<Courses>> getDataRepository() {
         return dataRepository;
