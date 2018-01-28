@@ -15,7 +15,6 @@ public abstract class Window extends JFrame {
         setSize(width, height);
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     protected abstract void configure(JPanel... jPanels);

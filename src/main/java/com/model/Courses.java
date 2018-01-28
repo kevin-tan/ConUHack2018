@@ -1,28 +1,32 @@
 package com.model;
 
+import com.utils.DateTimeUtils;
+import org.joda.time.DateTime;
+
 public class Courses {
     private String courseName;
-    private Time startTime;
+    private DateTime startTime;
 
-    public Courses(String courseName, Time startTime) {
+    public Courses(String courseName, DateTime startTime) {
         this.courseName = courseName;
         this.startTime = startTime;
     }
 
     public Courses() {
         this.courseName = "";
-        this.startTime = new Time(0, 0, 0);
+        this.startTime = new DateTime(DateTimeUtils.dateTime().getMonthOfYear(),DateTimeUtils.dateTime().getMonthOfYear(),
+                DateTimeUtils.dateTime().getDayOfMonth(),0,0);
     }
 
     public String getCourseName() {
         return courseName;
     }
 
-    public Time getStartTime() {
+    public DateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(DateTime startTime) {
         this.startTime = startTime;
     }
 }

@@ -10,7 +10,6 @@ public class StartupForm {
     public StartupForm() {
         startupWindow = new StartupWindow("Setup - 1",
                 FrameConstants.FORM_WINDOW_WIDTH, FrameConstants.FORM_WINDOW_HEIGHT);
-        startupWindow.setVisible(true);
     }
 
     public void startStartupForm(){

@@ -30,6 +30,7 @@ public class ProgramWindow extends Window {
         jMenuBar = new JMenuBar();
         directionRequestThread = null;
         directionRequest = new DirectionRequest(DataRepository.getUser());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configure();
     }
 
@@ -73,6 +74,9 @@ public class ProgramWindow extends Window {
             e.printStackTrace();
         }
         add(panel, BorderLayout.CENTER);
+
+        //Data
+
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {

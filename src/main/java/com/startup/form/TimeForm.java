@@ -1,10 +1,12 @@
 package com.startup.form;
 
 import com.data.DataRepository;
-import com.model.Time;
+import com.program.Program;
 import com.startup.constants.WeekdayId;
+import com.utils.DateTimeUtils;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
+import org.joda.time.DateTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,9 +30,11 @@ class TimeForm extends JPanel {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setForeground(Color.BLUE);
-
+        Program program = new Program();
         submitButton.addActionListener((actionEvent) -> {
             registerTimeData();
+            SwingUtilities.getWindowAncestor(this).setVisible(false);
+            program.start();
         });
 
         addTextFields();
@@ -67,10 +71,8 @@ class TimeForm extends JPanel {
     private void registerTimeData() {
         for (WeekdayId weekdayId : WeekdayId.values()) {
             for (int i = 0; i < textFieldRepo.get(weekdayId).size(); i++) {
-                Time time = getTimeObject(textFieldRepo.get(weekdayId).get(i).getText());
-                if (!time.isEmpty()) {
-                    DataRepository.getDataRepository().get(weekdayId).get(i).setStartTime(time);
-                }
+                DateTime time = getTimeObject(textFieldRepo.get(weekdayId).get(i).getText());
+                DataRepository.getDataRepository().get(weekdayId).get(i).setStartTime(time);
             }
         }
     }
@@ -82,15 +84,17 @@ class TimeForm extends JPanel {
     }
 
     //TODO need to parse the input to return a time object
-    private Time getTimeObject(String timeInput) {
+    private DateTime getTimeObject(String timeInput) {
         String[] hoursMinutes = timeInput.split(":", 2);
         int hours = Integer.parseInt(hoursMinutes[0]);
         int minutes = Integer.parseInt(hoursMinutes[1]);
 
         if (hours > 0 && hours <= 24 && minutes > 0 && minutes < 60) {
-            return new Time(hours, minutes, 0);
+            return new DateTime(DateTimeUtils.dateTime().getYear(), DateTimeUtils.dateTime().getMonthOfYear(),
+                    DateTimeUtils.dateTime().getDayOfMonth(), hours, minutes);
         } else {
-            return new Time(0, 0, 0);
+            return new DateTime(DateTimeUtils.dateTime().getMonthOfYear(),DateTimeUtils.dateTime().getMonthOfYear(),
+                    DateTimeUtils.dateTime().getDayOfMonth(),0,0);
         }
     }
 

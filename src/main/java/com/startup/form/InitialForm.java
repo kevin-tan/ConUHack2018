@@ -20,7 +20,6 @@ public class InitialForm extends JPanel {
         layeredPane.setSize(new Dimension(getWidth(), getHeight()));
 
         DeparturesForm departuresForm = new DeparturesForm(numOfDepartures);
-
         JButton submitButton = new JButton("Submit");
         submitButton.setForeground(Color.BLUE);
 
