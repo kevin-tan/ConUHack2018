@@ -89,11 +89,11 @@ class TimeForm extends JPanel {
         int hours = Integer.parseInt(hoursMinutes[0]);
         int minutes = Integer.parseInt(hoursMinutes[1]);
 
-        if (hours > 0 && hours <= 24 && minutes > 0 && minutes < 60) {
+        if (hours > 0 && hours <= 24 && minutes >= 0 && minutes < 60) {
             return new DateTime(DateTimeUtils.dateTime().getYear(), DateTimeUtils.dateTime().getMonthOfYear(),
                     DateTimeUtils.dateTime().getDayOfMonth(), hours, minutes);
         } else {
-            return new DateTime(DateTimeUtils.dateTime().getMonthOfYear(),DateTimeUtils.dateTime().getMonthOfYear(),
+            return new DateTime(DateTimeUtils.dateTime().getYear(),DateTimeUtils.dateTime().getMonthOfYear(),
                     DateTimeUtils.dateTime().getDayOfMonth(),0,0);
         }
     }

@@ -5,7 +5,9 @@ public enum WeekdayId {
     TUESDAY("Tuesday", 2),
     WEDNESDAY("Wednesday", 3),
     THURSDAY("Thursday", 4),
-    FRIDAY("Friday", 5);
+    FRIDAY("Friday", 5),
+    SATURDAY("Saturday", 6),
+    SUNDAY("Sunday", 7);
 
     private final String weekday;
     private final int dayOfWeek;
@@ -15,7 +17,7 @@ public enum WeekdayId {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public int getDayOfWeek(){
+    public int getDayOfWeek() {
         return dayOfWeek;
     }
 

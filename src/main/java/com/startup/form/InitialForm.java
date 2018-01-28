@@ -8,7 +8,7 @@ import static com.windows.constants.FrameConstants.FORM_WINDOW_WIDTH;
 
 public class InitialForm extends JPanel {
 
-    private JComboBox[] numOfDepartures = new JComboBox[5];
+    private JComboBox[] numOfDepartures = new JComboBox[7];
 
     public InitialForm() {
         setSize(FORM_WINDOW_WIDTH, FORM_WINDOW_HEIGHT);

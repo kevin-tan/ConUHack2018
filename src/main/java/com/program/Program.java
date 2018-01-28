@@ -23,6 +23,7 @@ public class Program {
     }
 
     public void start() {
+        programWindow.addData();
         programWindow.setVisible(true);
         programWindow.startDirectionRequestThread();
         dateThread.start();
