@@ -12,12 +12,11 @@ import java.io.IOException;
 
 public class DimensionMatrixRequest extends DefaultGeoApiContextStarter{
 
-    private User user;
     private DistanceMatrix results;
     private DistanceMatrixApiRequest request;
 
     public DimensionMatrixRequest(User user){
-        this.user = user;
+        super(user);
         results = null;
         request = null;
     }
@@ -26,7 +25,8 @@ public class DimensionMatrixRequest extends DefaultGeoApiContextStarter{
         request = DistanceMatrixApi.newRequest(geoApiContext)
                 .origins(user.getAddressOrigin())
                 .destinations(user.getAddressDestination())
-                .mode(user.getTravelMode());
+                .mode(user.getTravelMode())
+                .transitModes(user.getTransitModes());
         results = request.await();
         return results.rows[0].elements[0].duration;
     }

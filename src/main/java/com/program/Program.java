@@ -1,6 +1,6 @@
 package com.program;
 
-import com.program.window.ClockThread;
+import com.program.window.thread.ClockThread;
 import com.program.window.ProgramWindow;
 import com.startup.constants.WeekdayId;
 import com.data.DataRepository;
