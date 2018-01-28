@@ -42,25 +42,18 @@ public class ProgramWindow extends Window {
 
         add(jMenuBar, BorderLayout.NORTH);
 
-        //Adding Google's Api for DimensionMatrix
-        JLabel duration = null;
-        try {
-             duration = new JLabel(dimensionMatrixRequest.getTripDuration().humanReadable);
-             duration.setSize(50,50);
-        } catch (InterruptedException | ApiException | IOException e) {
-            e.printStackTrace();
-        }
-        add(duration, BorderLayout.EAST);
-
         //Adding Google's Api for Direction
-        JLabel startDirection = null;
+        JPanel panel = new JPanel(new GridLayout(4, 1));
         try {
-            startDirection = new JLabel(directionRequest.getStartDirection());
-            startDirection.setSize(100,100);
+            for (String busLine : directionRequest.getStartDirection()) {
+                JLabel startDirection = new JLabel(busLine);
+                startDirection.setSize(10, 10);
+                panel.add(startDirection);
+            }
         } catch (InterruptedException | ApiException | IOException e) {
             e.printStackTrace();
         }
-        add(startDirection, BorderLayout.WEST);
+        add(panel, BorderLayout.CENTER);
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {
