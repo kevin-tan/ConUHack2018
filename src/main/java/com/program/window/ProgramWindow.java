@@ -58,24 +58,26 @@ public class ProgramWindow extends Window {
         //Adding Google's Api for Direction (Showing the closest time to current)
         JPanel panel = new JPanel(new GridLayout(4, 1)); //TODO change layout of panel
 
-        try {
-            DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg(map
-                    .get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
-                    .get(0).getStartTime())[0];
-            TransitDetails transitDetails = directionsLegDeparture.steps[1].transitDetails;
-            JLabel bus = JLabelFactory.createJLabel(StringUtils
-                    .appendStrings(transitDetails.headsign, transitDetails.line.name));
-            JLabel departureFromHome = JLabelFactory.createJLabel(directionsLegDeparture.departureTime.toString(DateTimeFormat.shortTime()));
-            JLabel departure = JLabelFactory.createJLabel(transitDetails.departureTime.toString(DateTimeFormat.shortTime()));
-            JLabel arrival = JLabelFactory.createJLabel(directionsLegDeparture.arrivalTime.toString(DateTimeFormat.shortTime()));
-            directionRequestThread = new DirectionRequestThread(this, directionRequest, map,
-                    bus, departureFromHome, departure, arrival);
-            panel.add(bus);
-            panel.add(departureFromHome);
-            panel.add(departure);
-            panel.add(arrival);
-        } catch (InterruptedException | ApiException | IOException e) {
-            e.printStackTrace();
+        if (!map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek())).isEmpty()) {
+            try {
+                DirectionsLeg directionsLegDeparture = directionRequest.getDirectionLeg(map
+                        .get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
+                        .get(0).getStartTime())[0];
+                TransitDetails transitDetails = directionsLegDeparture.steps[1].transitDetails;
+                JLabel bus = JLabelFactory.createJLabel(StringUtils
+                        .appendStrings(transitDetails.headsign, transitDetails.line.name));
+                JLabel departureFromHome = JLabelFactory.createJLabel(directionsLegDeparture.departureTime.toString(DateTimeFormat.shortTime()));
+                JLabel departure = JLabelFactory.createJLabel(transitDetails.departureTime.toString(DateTimeFormat.shortTime()));
+                JLabel arrival = JLabelFactory.createJLabel(directionsLegDeparture.arrivalTime.toString(DateTimeFormat.shortTime()));
+                directionRequestThread = new DirectionRequestThread(this, directionRequest, map,
+                        bus, departureFromHome, departure, arrival);
+                panel.add(bus);
+                panel.add(departureFromHome);
+                panel.add(departure);
+                panel.add(arrival);
+            } catch (InterruptedException | ApiException | IOException e) {
+                e.printStackTrace();
+            }
         }
         add(panel, BorderLayout.CENTER);
 
@@ -88,10 +90,12 @@ public class ProgramWindow extends Window {
         JPanel date = new JPanel(new FlowLayout());
         JLabel currentDate = new JLabel(DateTimeUtils.dateTime().toString(DateTimeFormat.mediumDate()));
         date.add(currentDate);
-        JLabel departureTime = new JLabel(map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
-                .get(0).getStartTime().toString(DateTimeFormat.mediumTime()));
-        date.add(departureTime);
-        add(date, BorderLayout.EAST);
+        if (!map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek())).isEmpty()) {
+            JLabel departureTime = new JLabel(map.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek()))
+                    .get(0).getStartTime().toString(DateTimeFormat.mediumTime()));
+            date.add(departureTime);
+            add(date, BorderLayout.EAST);
+        }
     }
 
     private JMenu createJMenu(MenuBar menuBar, JMenuItem... jMenuItems) {

@@ -5,6 +5,7 @@ import com.program.window.ProgramWindow;
 import com.startup.constants.WeekdayId;
 import com.data.DataRepository;
 import com.model.Courses;
+import com.utils.DateTimeUtils;
 import com.windows.constants.FrameConstants;
 
 import java.util.List;
@@ -25,7 +26,8 @@ public class Program {
     public void start() {
         programWindow.addData();
         programWindow.setVisible(true);
-        programWindow.startDirectionRequestThread();
+        if (!dataRepo.get(DateTimeUtils.getEnum(DateTimeUtils.dateTime().getDayOfWeek())).isEmpty())
+            programWindow.startDirectionRequestThread();
         dateThread.start();
     }
 
