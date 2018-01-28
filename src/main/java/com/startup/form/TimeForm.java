@@ -98,4 +98,11 @@ class TimeForm extends JPanel {
         }
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Image bgImage = new ImageIcon("src\\resources\\04_bg.png").getImage();
+        g.drawImage(bgImage, 0, 0, null);
+    }
+
 }
