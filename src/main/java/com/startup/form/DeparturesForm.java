@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.startup.data.DataConstants.NUM_OF_DEPARTURES;
+import static com.data.DataConstants.NUM_OF_DEPARTURES;
 import static com.windows.constants.FrameConstants.INFO_WINDOW_HEIGHT;
 import static com.windows.constants.FrameConstants.INFO_WINDOW_WIDTH;
 
